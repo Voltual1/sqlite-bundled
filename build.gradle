@@ -60,6 +60,7 @@ def SQLITE_COMPILE_FLAGS = [
         "-DSQLITE_SECURE_DELETE",
         "-DSQLITE_TEMP_STORE=3",
         "-DSQLITE_THREADSAFE=2",
+        "-DSQLITE_ENABLE_DBPAGE_VTAB",
 ]
 
 // see PrepareSqliteSourcesTask.groovy for implementation details of the register method
