@@ -18,7 +18,12 @@ jobs:
           mkdir androidx
           cd androidx
           repo init -u https://android.googlesource.com/platform/manifest -b androidx-main --depth=1
-          repo sync -j8 frameworks/support
+
+      - name: Sync required projects
+        run: |
+          cd androidx
+          # 同步 frameworks/support 和 prebuilts
+          repo sync -j8 frameworks/support prebuilts
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -29,3 +34,9 @@ jobs:
       - name: Build sqlite-bundled
         working-directory: androidx/frameworks/support
         run: ./gradlew :sqlite:sqlite-bundled:assembleRelease
+
+      - name: Upload AAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-bundled-aar
+          path: "**/build/outputs/aar/*.aar"
